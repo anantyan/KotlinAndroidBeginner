@@ -8,7 +8,7 @@ import com.tutorial.databinding.ListMainBinding
 import com.tutorial.models.MainModel
 
 class MainAdapter(
-    private var result: MutableList<MainModel>,
+    private var result: List<MainModel>,
     private var listener: MainAdapterView
 ) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 

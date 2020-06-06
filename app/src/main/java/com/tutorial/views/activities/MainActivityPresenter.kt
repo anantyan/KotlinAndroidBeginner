@@ -13,18 +13,16 @@ class MainActivityPresenter(
 ) {
     private val disposable: CompositeDisposable = CompositeDisposable()
 
-    fun discoverMainActivity() {
+    fun resultsMainActivity() {
         view.onShowLoading()
         val api: MainApi = RetrofitUtil.providerHttpAdapter().create(MainApi::class.java)
         api.discoverMovie()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribe({
-                    t: ResponseModel? ->
+            .subscribe({ t: ResponseModel? ->
                 view.onHideLoading()
-                view.onResponse(t!!.results)
-            },{
-                    t: Throwable? ->
+                view.onResponse(t?.results!!)
+            },{ t: Throwable? ->
                 view.onHideLoading()
                 view.onFailure(t!!)
             })

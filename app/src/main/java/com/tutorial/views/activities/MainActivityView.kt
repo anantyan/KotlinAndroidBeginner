@@ -6,6 +6,6 @@ interface MainActivityView {
 
     fun onShowLoading()
     fun onHideLoading()
-    fun onResponse(response: MutableList<MainModel>)
+    fun onResponse(response: List<MainModel>)
     fun onFailure(error: Throwable)
 }

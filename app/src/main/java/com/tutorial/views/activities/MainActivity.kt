@@ -13,12 +13,12 @@ import com.tutorial.views.adapters.MainAdapter
 import com.tutorial.views.adapters.MainAdapterView
 import java.util.*
 
-class MainActivity : AppCompatActivity(), MainActivityView {
+class MainActivity : AppCompatActivity(), MainActivityView, MainAdapterView {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var presenter: MainActivityPresenter
+    private val presenter: MainActivityPresenter = MainActivityPresenter(this)
+    private val adapter: MainAdapter = MainAdapter(list, this)
     companion object {
-        private var adapter: MainAdapter? = null
         private var list: MutableList<MainModel> = ArrayList()
     }
 
@@ -26,21 +26,11 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = MainActivityPresenter(this)
-        presenter.discoverMainActivity()
-        funViews()
-
+        presenter.resultsMainActivity()
+        binding()
     }
 
-    private fun funViews() {
-        adapter = MainAdapter(list, object :
-            MainAdapterView {
-            override fun onClick(position: Int) {
-                val result = list[position]
-                Toast.makeText(applicationContext, result.title, Toast.LENGTH_SHORT).show()
-            }
-        })
-
+    private fun binding() {
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         binding.recyclerView.itemAnimator = DefaultItemAnimator()
@@ -58,14 +48,19 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         binding.recyclerView.visibility = View.VISIBLE
     }
 
-    override fun onResponse(response: MutableList<MainModel>) {
+    override fun onResponse(response: List<MainModel>) {
         list.clear()
         list.addAll(response)
-        adapter?.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 
     override fun onFailure(error: Throwable) {
         Toast.makeText(applicationContext, "${error.printStackTrace()}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClick(position: Int) {
+        val result = list[position]
+        Toast.makeText(applicationContext, result.title, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {
