@@ -2,7 +2,7 @@ package com.tutorial.api
 
 import com.tutorial.BuildConfig
 import com.tutorial.models.ResponseModel
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 

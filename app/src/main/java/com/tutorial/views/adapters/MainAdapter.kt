@@ -8,7 +8,7 @@ import com.tutorial.databinding.ListMainBinding
 import com.tutorial.models.MainModel
 
 class MainAdapter(
-    private var result: List<MainModel>,
+    private var result: MutableList<MainModel>,
     private var listener: MainAdapterView
 ) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
@@ -20,6 +20,10 @@ class MainAdapter(
         init {
             itemView.setOnClickListener {
                 listener?.onClick(adapterPosition)
+            }
+            itemView.setOnLongClickListener {
+                listener?.onLongClick(adapterPosition)
+                true
             }
         }
     }

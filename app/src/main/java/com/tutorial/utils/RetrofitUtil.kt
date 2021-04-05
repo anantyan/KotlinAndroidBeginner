@@ -4,11 +4,11 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.tutorial.BuildConfig
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.CookieManager
 import java.util.*
@@ -21,7 +21,7 @@ object RetrofitUtil {
             client(providerHttpClient())
             baseUrl(BuildConfig.BASE_URL)
             addConverterFactory(GsonConverterFactory.create(gson()))
-            addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+            addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
         }.build()
     }
 
